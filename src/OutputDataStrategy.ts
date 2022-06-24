@@ -7,7 +7,7 @@ export interface ShelterAnimalContent {
          animal_id :  string ,
          animal_type :  string ,
          animal_breed :  string ,
-         kennel_number :  string ,
+         kennel_number? :  string ,
          kennel_status :  string ,
          activity_number :  string ,
          activity_sequence :  string ,

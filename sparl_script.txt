@@ -1,0 +1,29 @@
+from azure.eventhub import EventHubConsumerClient
+from elasticsearch import Elasticsearch
+from elasticsearch.helpers import bulk
+
+event_hub_connection_str = 'Endpoint=sb://animal-project.servicebus.windows.net/;SharedAccessKeyName=script-access-policy;SharedAccessKey=jhx2zhMDYhqrBctnp/IpwvRMsYvJgN796NdEwAhVPLY=;EntityPath=animals-project'
+consumer_group = '$Default'
+eventhub_name = 'animals-project'
+#print('Just loaded client for event hub')
+client = EventHubConsumerClient.from_connection_string(event_hub_connection_str, consumer_group, eventhub_name=eventhub_name)
+
+#print('Elastic Search client:')
+es = Elasticsearch(
+    cloud_id='animal-project-deployment:dXMtY2VudHJhbDEuZ2NwLmNsb3VkLmVzLmlvOjQ0MyQ5ZGIwZTk3MWEwNDE0ZjFkYmJiMDFhZDE1YzhhMDlmOSQ0M2ZlMTlhOWU5Yjc0ZjJkYjkxYzY5NTk3YjFhZDRhMQ==',
+    basic_auth=('elastic', 'wEQOuteOgDtrbfbT3tGa3XMl')
+)
+
+#print('start processing')
+def process_data(partition_context, event):
+    partition_context.update_checkpoint(event)
+    json_body = event.body_as_json()
+    print("Object:",json_body)
+    bulk(es, [{"_index": "animals_index","_source": json_body}] )
+
+with client:
+    client.receive(
+        on_event=process_data,
+        starting_position="-1",  # "-1" is from the beginning of the partition.
+    )
+

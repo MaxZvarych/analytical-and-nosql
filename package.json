@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node --loader ts-node/esm ./src/main.ts",
-    "start-consuming": "node --loader ts-node/esm ./src/messageConsumer.ts"
+    "start-consuming": "node --loader ts-node/esm ./src/messageConsumer.ts",
+    "start-file-outputting": "node --loader ts-node/esm ./src/ToVolumeFileStrategy.ts"
   },
   "repository": {
     "type": "git",
@@ -25,7 +26,10 @@
     "typescript": "^4.7.3"
   },
   "dependencies": {
+    "@azure/event-hubs": "^5.8.0",
     "axios": "^0.27.2",
-    "dotenv": "^16.0.1"
+    "bluebird": "^3.7.2",
+    "dotenv": "^16.0.1",
+    "redis": "^4.1.0"
   }
 }
