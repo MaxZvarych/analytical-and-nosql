@@ -71,7 +71,7 @@ export default class OutputStrategyRunner implements StrategyRunner{
             this.data= data.slice(0,10);
             
             if(shouldUploadData) {
-              this.outputter=process.env.STRATEGY_TYPE==="console"?new ConsoleStrategy(data.slice(0,5)):process.env.STRATEGY_TYPE==="file"?new ToVolumeFileStrategy(data.slice(0,81)):new EventHubStrategy(data.slice(0,81))
+              this.outputter=process.env.STRATEGY_TYPE==="console"?new ConsoleStrategy(data.slice(0,5)):process.env.STRATEGY_TYPE==="file"?new ToVolumeFileStrategy(data.slice(0,81)):new EventHubStrategy(data)
               console.log("\nCache command: SET status completed");
               console.log("Cache response : " + await cacheConnection.set(requestDataUrl,"completed"));
             }

@@ -1,3 +1,3 @@
 docker build .
-docker run -it -v animals-volume:/usr/src/app/src/text_volume 93d0e8c20d19
+docker run -it -v animals-volume:/usr/src/app/src/text_volume 834d54a92148
 docker run -it -v docker_volume:/usr/src/app/src/text_volume 93d0e8c20d19
